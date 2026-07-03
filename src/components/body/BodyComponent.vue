@@ -436,7 +436,7 @@ watch(
 
       <div v-if="activeTab === 'invoices'" class="table-wrapper">
         <table class="user-table">
-          <thead>
+            <thead>
             <tr>
               <th>Name</th>
               <th>Email</th>
@@ -453,14 +453,14 @@ watch(
                 :class="{ expanded: expandedEmail === user.email }"
                 @click="toggleExpand(user.email)"
               >
-                <td class="name-cell">
+                <td class="name-cell" data-label="Name">
                   <span class="avatar">{{ user.name.charAt(0) }}</span>
                   {{ user.name }}
                 </td>
-                <td class="email-cell">{{ user.email }}</td>
-                <td class="id-cell">{{ shortId(user.id) }}</td>
-                <td class="message-cell">{{ lastMessagePreview(user) }}</td>
-                <td class="time-cell">{{ lastMessageTime(user) }}</td>
+                <td class="email-cell" data-label="Email">{{ user.email }}</td>
+                <td class="id-cell" data-label="ID">{{ shortId(user.id) }}</td>
+                <td class="message-cell" data-label="Message">{{ lastMessagePreview(user) }}</td>
+                <td class="time-cell" data-label="Sent">{{ lastMessageTime(user) }}</td>
                 <td class="action-cell" @click.stop>
                   <button class="delete-btn" title="Delete user" @click="deleteUser(user.email)">
                     <svg
@@ -1764,5 +1764,185 @@ td {
 .chat-send-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+@media (max-width: 800px) {
+  .invoices-section {
+    margin: 0.5rem;
+    border-radius: 0.75rem;
+  }
+  .section-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .header-actions {
+    margin-left: auto;
+  }
+  .refresh-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+  .compose-btn {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.75rem;
+  }
+  .lock-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .user-table,
+  .user-table thead,
+  .user-table tbody,
+  .user-table tr,
+  .user-table th,
+  .user-table td {
+    display: block;
+  }
+  .user-table thead {
+    display: none;
+  }
+  .user-table .user-row {
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    background: var(--bg-primary);
+  }
+  .user-table .user-row.expanded {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 0;
+  }
+  .user-table .user-row td {
+    padding: 0.35rem 0;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .user-table .user-row td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    min-width: 70px;
+    flex-shrink: 0;
+  }
+  .user-table .user-row .name-cell::before {
+    content: '';
+    display: none;
+  }
+  .user-table .user-row .action-cell {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0;
+  }
+  .user-table .user-row {
+    position: relative;
+  }
+  .user-table .user-row .message-cell {
+    font-style: normal;
+    max-width: none;
+  }
+  .user-table .expand-row td {
+    padding: 0;
+  }
+  .messages-container {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .chat-layout {
+    flex-direction: column;
+  }
+  .chat-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    max-height: 140px;
+  }
+  .sidebar-head {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  .peer-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0.4rem;
+    gap: 0.3rem;
+  }
+  .peer-item {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .chat-main {
+    min-height: 300px;
+  }
+  .chat-bubble {
+    max-width: 85%;
+  }
+
+  .auth-card {
+    padding: 1.5rem 1rem;
+    max-width: 320px;
+  }
+  .modal-card {
+    max-width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    min-height: 100dvh;
+  }
+  .modal-overlay {
+    padding: 0;
+  }
+  .toolbar-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .invoices-section {
+    margin: 0.25rem;
+    border-radius: 0.5rem;
+  }
+  .section-header {
+    padding: 0.4rem;
+  }
+  .tab {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.75rem;
+  }
+  .user-table .user-row {
+    padding: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .user-table .user-row td {
+    font-size: 0.8rem;
+    padding: 0.25rem 0;
+  }
+  .messages-container {
+    padding: 0.5rem;
+  }
+  .message-item {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .chat-sidebar {
+    max-height: 110px;
+  }
+  .chat-messages {
+    padding: 0.5rem;
+  }
+  .auth-card {
+    padding: 1.25rem 0.85rem;
+    max-width: 280px;
+  }
+  .compose-form {
+    padding: 1rem;
+  }
 }
 </style>

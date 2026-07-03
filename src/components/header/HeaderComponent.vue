@@ -144,6 +144,31 @@ function toggleSettings() {
   color: var(--text-primary);
 }
 
+@media (max-width: 800px) {
+  .header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-bottom: 0.75rem;
+  }
+  .search-input {
+    width: 100%;
+    order: 1;
+  }
+  .profile-div .inner {
+    display: none;
+  }
+  .bell {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-input {
+    font-size: 0.85rem;
+    padding: 0.75rem;
+  }
+}
+
 .settings-item {
   display: flex;
   align-items: center;

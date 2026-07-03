@@ -42,6 +42,11 @@
   position: relative;
 }
 
+@media (max-width: 800px) {
+  .side_gutter {
+    display: none;
+  }
+}
 .logo-wrapper {
   position: relative;
 }
