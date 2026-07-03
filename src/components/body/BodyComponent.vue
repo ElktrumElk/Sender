@@ -82,14 +82,9 @@ main {
   .tab-bar {
     display: none;
   }
-}
-</style>
 
-<style lang="css" scoped>
-main {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  main {
+    padding-block: 1rem;
+  }
 }
 </style>
