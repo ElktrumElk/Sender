@@ -39,21 +39,6 @@ A lightweight frontend-only platform for receiving and managing user messages, s
 - Node.js `^22.18.0 \|\| >=24.12.0`
 - A running backend server (default: `http://localhost:8090`)
 
-## Getting Started
-
-```bash
-# Install dependencies
-npm install
-
-# Start the dev server
-npm run dev
-```
-
-Set the backend URL in `.env`:
-
-```
-VITE_BASE_URL=http://localhost:8090
-```
 
 ## Available Scripts
 
@@ -66,6 +51,52 @@ VITE_BASE_URL=http://localhost:8090
 | `npm run test:e2e` | Run Playwright E2E tests |
 | `npm run lint` | Lint with oxlint and ESLint |
 | `npm run format` | Format with Prettier |
+
+## Connecting an External Frontend App
+
+After signing up, each user receives a unique **user ID** displayed in the settings menu (gear icon → "ID"). Your external apps use this ID to send messages into this dashboard.
+
+### How it works
+
+1. A user signs up on the Sender dashboard and gets a `user_id`
+2. Your external app (e.g. a contact form, support widget, or mobile app) sends a request to the backend API with that `user_id`
+3. The message appears in the admin's inbox under that user's name/email
+
+### API contract for sending messages
+
+The backend endpoint for receiving messages from external apps is not defined in this frontend repo, but here's what the dashboard expects when fetching messages via `GET /get_messages?user_id=<id>`:
+
+```json
+[
+  {
+    "content": "Hello, I need help with my order",
+    "username": "johndoe",
+    "email": "john@example.com",
+    "created_at": "2026-07-03T12:00:00Z"
+  }
+]
+```
+
+Your external app should make a `POST` request (e.g. to an endpoint like `/send` or `/message`) with at minimum:
+- `user_id` — the recipient's ID from the Sender dashboard
+- `content` — the message body
+- `username` / `email` — sender identity (if applicable)
+
+Example request your external app might make:
+
+```http
+POST /send HTTP/1.1
+Content-Type: application/json
+
+{
+  "user_id": "abc-123-def",
+  "username": "johndoe",
+  "email": "john@example.com",
+  "content": "Hello, I need help with my order"
+}
+```
+
+The admin then sees this message in the **Invoices** tab, and can reply via the **Compose** modal or chat in real time.
 
 ## API Endpoints (expected by the frontend)
 
