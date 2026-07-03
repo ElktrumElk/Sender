@@ -100,10 +100,12 @@
   #app {
     display: flex;
     flex-direction: column;
+    border: 1px solid green;
   }
   .app {
     display: grid;
     grid-template-columns: 80px 2fr;
+    grid-auto-rows: 1fr;
     height: 100%;
     width: 100%;
     flex: 0 2 auto;

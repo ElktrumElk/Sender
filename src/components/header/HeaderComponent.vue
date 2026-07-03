@@ -27,8 +27,8 @@ function toggleSettings() {
       <div class="settings-wrapper">
         <button class="settings-btn" title="Settings" @click="toggleSettings">
           <svg
-            width="22"
-            height="22"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -42,20 +42,23 @@ function toggleSettings() {
             />
           </svg>
         </button>
+
         <MenuPanel v-if="showSettings" />
       </div>
       <img
         class="bell"
         src="https://img.icons8.com/?size=100&id=11642&format=png&color=36454f"
-        width="25"
-        height="25"
+        width="20"
+        height="20"
       />
+
       <img
         src="https://avatars.githubusercontent.com/u/131537619?v=4"
-        width="50"
-        height="50"
+        width="30"
+        height="30"
         class="profile-img"
       />
+
       <div class="inner">
         <strong>{{ auth.username }}</strong>
         <span>{{ auth.userEmail }}</span>
@@ -149,6 +152,7 @@ function toggleSettings() {
     flex-wrap: wrap;
     gap: 0.5rem;
     padding-bottom: 0.75rem;
+    display: none;
   }
   .search-input {
     width: 100%;

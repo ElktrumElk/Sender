@@ -2,7 +2,7 @@ import { reactive } from 'vue'
 
 export const api = reactive({
   baseUrl: import.meta.env.VITE_BASE_URL,
-  token: ''
+  token: '',
 })
 
 export function setToken(token: string) {
@@ -19,7 +19,7 @@ export async function apiPost(path: string, body: unknown, auth = false): Promis
   const res = await fetch(`${api.baseUrl}${path}`, {
     method: 'POST',
     headers,
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   })
   if (res.status === 401) throw new Error('Unauthorized')
   if (!res.ok) {
@@ -45,6 +45,6 @@ export async function apiPostRaw(path: string, body: unknown, auth = false): Pro
   return fetch(`${api.baseUrl}${path}`, {
     method: 'POST',
     headers,
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   })
 }
