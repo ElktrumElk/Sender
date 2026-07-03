@@ -1,73 +1,81 @@
-# portfolio-review
+# Sender
 
-This template should help get you started developing with Vue 3 in Vite.
+A lightweight frontend-only platform for receiving and managing user messages, sending admin replies, and chatting in real time — no backend server code required on your end.
 
-## Recommended IDE Setup
+## Workflow
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+1. **Sign up / Sign in** — Create an account or log in with your username and password. A JWT token is stored in the session.
+2. **Inbox (Invoices tab)** — View a list of users who have sent you messages. Click any row to expand and read all messages from that user.
+3. **Send replies** — Click the compose button to open a Markdown editor and send an email-like message to any user.
+4. **Live Chat (Chat tab)** — Connect via WebSocket to see online peers, start new conversations, and exchange real-time messages.
+5. **Search & manage** — Filter users by name, email, or message content. Delete users from your inbox as needed.
+6. **Lock / Logout** — Clear the session at any time via the settings menu.
 
-## Recommended Browser Setup
+## Features
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **Authentication** — JWT-based sign up and sign in
+- **Message inbox** — Fetch, expand, search, and manage user messages
+- **Admin compose** — Send Markdown-formatted emails to users with a toolbar (bold, italic, bullet list, numbered list) and selection wrapping
+- **Real-time chat** — WebSocket-based live messaging with peer discovery and conversation history
+- **Dark mode** — Toggle light/dark theme, persisted to `localStorage`
+- **Responsive layout** — CSS Grid layout adapts to screen size
+- **Session management** — Auto-logout on token expiry (401)
 
-## Type Support for `.vue` Imports in TS
+## Tech Stack
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+| Layer | Technology |
+|---|---|
+| Framework | Vue 3 (Composition API, `<script setup>`) |
+| Language | TypeScript (strict) |
+| Build | Vite 8 |
+| State | Pinia 3 |
+| Routing | Vue Router 5 |
+| Linting | ESLint 10 + oxlint + Prettier |
+| Unit tests | Vitest 4 + jsdom |
+| E2E tests | Playwright 1.61 |
 
-## Customize configuration
+## Prerequisites
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Node.js `^22.18.0 \|\| >=24.12.0`
+- A running backend server (default: `http://localhost:8090`)
 
-## Project Setup
+## Getting Started
 
-```sh
+```bash
+# Install dependencies
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# Start the dev server
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Set the backend URL in `.env`:
 
-```sh
-npm run build
+```
+VITE_BASE_URL=http://localhost:8090
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## Available Scripts
 
-```sh
-npm run test:unit
-```
+| Command | Description |
+|---|---|
+| `npm run dev` | Start Vite dev server with HMR |
+| `npm run build` | Type-check with `vue-tsc`, then build for production |
+| `npm run preview` | Preview the production build locally |
+| `npm run test:unit` | Run Vitest unit tests |
+| `npm run test:e2e` | Run Playwright E2E tests |
+| `npm run lint` | Lint with oxlint and ESLint |
+| `npm run format` | Format with Prettier |
 
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
+## API Endpoints (expected by the frontend)
 
-```sh
-# Install browsers for the first run
-npx playwright install
-
-# When testing on CI, must build the project first
-npm run build
-
-# Runs the end-to-end tests
-npm run test:e2e
-# Runs the tests only on Chromium
-npm run test:e2e -- --project=chromium
-# Runs the tests of a specific file
-npm run test:e2e -- tests/example.spec.ts
-# Runs the tests in debug mode
-npm run test:e2e -- --debug
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | `/signup` | Register a new user |
+| POST | `/login` | Authenticate and receive JWT |
+| GET | `/get_messages?user_id=...` | Fetch messages for a user |
+| POST | `/admin/send` | Send an admin email |
+| GET | `/get_user?username=...` | Search for a user |
+| GET | `/conversations` | List chat peers |
+| GET | `/conversations/:peer` | Load chat history with a peer |
+| WS | `/ws` | WebSocket endpoint for live chat |
