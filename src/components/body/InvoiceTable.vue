@@ -98,14 +98,32 @@ const emit = defineEmits<{
       <strong class="page_name">Invoice</strong>
       <div class="header-actions">
         <button class="compose-btn" title="Send email" @click="emit('compose')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M22 2L11 13" />
             <path d="M22 2l-7 20-4-9-9-4 20-7z" />
           </svg>
           Send
         </button>
         <button class="lock-btn" title="Lock" @click="lock">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           </svg>
@@ -130,7 +148,11 @@ const emit = defineEmits<{
         </thead>
         <tbody>
           <template v-for="user in filteredUsers" :key="user.email">
-            <tr class="user-row" :class="{ expanded: expandedEmail === user.email }" @click="toggleExpand(user.email)">
+            <tr
+              class="user-row"
+              :class="{ expanded: expandedEmail === user.email }"
+              @click="toggleExpand(user.email)"
+            >
               <td class="name-cell" data-label="Name">
                 <span class="avatar">{{ user.name.charAt(0) }}</span>
                 {{ user.name }}
@@ -140,10 +162,37 @@ const emit = defineEmits<{
               <td class="message-cell" data-label="Message">{{ lastMessagePreview(user) }}</td>
               <td class="time-cell" data-label="Sent">{{ lastMessageTime(user) }}</td>
               <td class="action-cell" @click.stop>
+                <button class="send_button" :style="{ width: '30', height: '30' }">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M22 2L11 13" />
+                    <path d="M22 2l-7 20-4-9-9-4 20-7z" />
+                  </svg>
+                </button>
+
                 <button class="delete-btn" title="Delete user" @click="deleteUser(user.email)">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
                     <polyline points="3 6 5 6 21 6" />
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    <path
+                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                    />
                     <line x1="10" y1="11" x2="10" y2="17" />
                     <line x1="14" y1="11" x2="14" y2="17" />
                   </svg>
@@ -171,6 +220,16 @@ const emit = defineEmits<{
 </template>
 
 <style lang="css" scoped>
+.send_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(117, 117, 255);
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  color: white;
+}
 .invoices-section {
   background: var(--bg-secondary);
   border-radius: 1rem;
@@ -375,6 +434,8 @@ td {
 .action-cell {
   width: 48px;
   text-align: center;
+  display: flex;
+  gap: 0.5rem;
 }
 .delete-btn {
   display: inline-flex;
@@ -428,7 +489,12 @@ td {
     color: var(--text-primary);
     font-size: 1.2rem;
   }
-  .user-table, .user-table thead, .user-table tbody, .user-table tr, .user-table th, .user-table td {
+  .user-table,
+  .user-table thead,
+  .user-table tbody,
+  .user-table tr,
+  .user-table th,
+  .user-table td {
     display: block;
   }
   .user-table thead {
