@@ -88,8 +88,9 @@ async function refresh(): Promise<void> {
 }
 
 const emit = defineEmits<{
-  (e: 'compose'): void
+  (e: 'compose', email?: string): void
 }>()
+
 </script>
 
 <template>
@@ -162,7 +163,11 @@ const emit = defineEmits<{
               <td class="message-cell" data-label="Message">{{ lastMessagePreview(user) }}</td>
               <td class="time-cell" data-label="Sent">{{ lastMessageTime(user) }}</td>
               <td class="action-cell" @click.stop>
-                <button class="send_button" :style="{ width: '30', height: '30' }">
+                <button
+                  class="send_button"
+                  :style="{ width: '30', height: '30' }"
+                  @click="emit('compose', user.email)"
+                >
                   <svg
                     width="18"
                     height="18"

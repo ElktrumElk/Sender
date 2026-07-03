@@ -11,13 +11,16 @@ const route = useRoute()
 const router = useRouter()
 
 const showCompose = ref(false)
+const composeRecipient = ref('')
 
-function openCompose() {
+function openCompose(email?: string) {
+  composeRecipient.value = email || ''
   showCompose.value = true
 }
 
 function closeCompose() {
   showCompose.value = false
+  composeRecipient.value = ''
 }
 
 function goTo(path: string) {
@@ -38,7 +41,7 @@ function goTo(path: string) {
         </button>
       </div>
       <InvoiceTable v-if="route.path === '/'" @compose="openCompose" />
-      <ComposeEmail v-if="showCompose" @close="closeCompose" />
+      <ComposeEmail v-if="showCompose" :recipientEmail="composeRecipient" @close="closeCompose" />
     </template>
   </main>
 </template>

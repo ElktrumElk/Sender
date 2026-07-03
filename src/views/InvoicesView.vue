@@ -4,20 +4,23 @@ import InvoiceTable from '@/components/body/InvoiceTable.vue'
 import ComposeEmail from '@/components/body/ComposeEmail.vue'
 
 const showCompose = ref(false)
+const composeRecipient = ref('')
 
-function openCompose() {
+function openCompose(email?: string) {
+  composeRecipient.value = email || ''
   showCompose.value = true
 }
 
 function closeCompose() {
   showCompose.value = false
+  composeRecipient.value = ''
 }
 </script>
 
 <template>
   <div class="page-view">
     <InvoiceTable @compose="openCompose" />
-    <ComposeEmail v-if="showCompose" @close="closeCompose" />
+    <ComposeEmail v-if="showCompose" :recipientEmail="composeRecipient" @close="closeCompose" />
   </div>
 </template>
 

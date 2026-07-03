@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { sendAdminMessage, fetchMessages } from '@/services/messages-store'
 import { clearToken } from '@/services/api'
 import { useAuthStore } from '@/stores/auth'
 import { wsDisconnect } from '@/services/chat-store'
 
 const auth = useAuthStore()
+
+const props = defineProps<{
+  recipientEmail?: string
+}>()
 
 const composeEmail = ref('')
 const composeSubject = ref('')
@@ -17,6 +21,16 @@ const composeSuccess = ref('')
 const emit = defineEmits<{
   (e: 'close'): void
 }>()
+
+onMounted(() => {
+  if (props.recipientEmail) {
+    composeEmail.value = props.recipientEmail
+  }
+})
+
+const handleEmitInitEmail = (email: string) => {
+  composeEmail.value = email
+}
 
 function wrapSelection(before: string, after: string): void {
   const textarea = document.querySelector('.compose-textarea') as HTMLTextAreaElement | null
@@ -93,31 +107,78 @@ async function sendEmail(): Promise<void> {
       <div class="modal-header">
         <h2>Send Email</h2>
         <button class="modal-close" @click="emit('close')">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
       </div>
-      <form class="compose-form" @submit.prevent="sendEmail">
+      <form class="compose-form" @submit.prevent="sendEmail" @compose="handleEmitInitEmail">
         <div class="form-group">
           <label>To</label>
-          <input v-model="composeEmail" type="email" class="form-input" placeholder="recipient@example.com" />
+          <input
+            v-model="composeEmail"
+            type="email"
+            class="form-input"
+            placeholder="recipient@example.com"
+          />
         </div>
         <div class="form-group">
           <label>Subject <span class="optional">(optional)</span></label>
-          <input v-model="composeSubject" type="text" class="form-input" placeholder="Message subject" />
+          <input
+            v-model="composeSubject"
+            type="text"
+            class="form-input"
+            placeholder="Message subject"
+          />
         </div>
         <div class="form-group">
           <label>Message</label>
           <div class="toolbar">
-            <button type="button" class="toolbar-btn" title="Bold" @click="wrapSelection('**', '**')"><strong>B</strong></button>
-            <button type="button" class="toolbar-btn" title="Italic" @click="wrapSelection('*', '*')"><em>I</em></button>
-            <button type="button" class="toolbar-btn" title="Bullet list" @click="insertList('-')">• list</button>
-            <button type="button" class="toolbar-btn" title="Numbered list" @click="insertList('1.')">1. list</button>
+            <button
+              type="button"
+              class="toolbar-btn"
+              title="Bold"
+              @click="wrapSelection('**', '**')"
+            >
+              <strong>B</strong>
+            </button>
+            <button
+              type="button"
+              class="toolbar-btn"
+              title="Italic"
+              @click="wrapSelection('*', '*')"
+            >
+              <em>I</em>
+            </button>
+            <button type="button" class="toolbar-btn" title="Bullet list" @click="insertList('-')">
+              • list
+            </button>
+            <button
+              type="button"
+              class="toolbar-btn"
+              title="Numbered list"
+              @click="insertList('1.')"
+            >
+              1. list
+            </button>
             <span class="toolbar-hint">Markdown supported</span>
           </div>
-          <textarea v-model="composeContent" class="form-textarea compose-textarea" rows="8" placeholder="Type your message here..." />
+          <textarea
+            v-model="composeContent"
+            class="form-textarea compose-textarea"
+            rows="8"
+            placeholder="Type your message here..."
+          />
         </div>
         <p v-if="composeError" class="form-error">{{ composeError }}</p>
         <p v-if="composeSuccess" class="form-success">{{ composeSuccess }}</p>
