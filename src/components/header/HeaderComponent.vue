@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useAppStore } from '@/stores/app'
 import MenuPanel from './MenuPanel.vue'
+import IconPorifile from '../icons/IconPorifile.vue'
 
 const auth = useAuthStore()
 const app = useAppStore()
@@ -52,12 +53,9 @@ function toggleSettings() {
         height="20"
       />
 
-      <img
-        src="https://avatars.githubusercontent.com/u/131537619?v=4"
-        width="30"
-        height="30"
-        class="profile-img"
-      />
+      <div class="profile-img">
+        <IconPorifile />
+      </div>
 
       <div class="inner">
         <strong>{{ auth.username }}</strong>
@@ -100,8 +98,22 @@ function toggleSettings() {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 .profile-img {
-  border-radius: 4rem;
+  border-radius: 50%;
+  overflow: hidden;
+
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(127, 122, 122);
 }
+
+.profile-img svg {
+  width: 100%;
+  height: 100%;
+}
+
 .profile-div {
   display: flex;
   gap: 0.5rem;
