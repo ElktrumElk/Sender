@@ -73,7 +73,7 @@ async function sendEmail(): Promise<void> {
     composeEmail.value = ''
     composeSubject.value = ''
     composeContent.value = ''
-    fetchMessages()
+    fetchMessages(auth.userId)
   } catch (e) {
     const err = e as Error
     if (err.message === 'Unauthorized') {

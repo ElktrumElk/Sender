@@ -102,9 +102,9 @@ export function mergeMessages(data: BackendMessage[]): void {
   }
 }
 
-export async function fetchMessages(): Promise<void> {
-  const user_id = localStorage.getItem('user_id')
+export async function fetchMessages(user_id: string): Promise<void> {
   const data = (await apiGet(`/get_messages?user_id=${user_id}`)) as BackendMessage[]
+  console.log(data)
   mergeMessages(data)
 }
 
@@ -125,15 +125,12 @@ export async function sendAdminMessage(
 interface Search {
   username: string
 }
-export async function searchUser (username: string) {
+export async function searchUser(username: string) {
   try {
-
-    const data: Search = await apiGet(`/get_user?username=${username}`) as Search
-    return data.username;
-
-  }
-  catch (e) {
+    const data: Search = (await apiGet(`/get_user?username=${username}`)) as Search
+    return data.username
+  } catch (e) {
     console.error('Error:', e)
-    alert('User not found');
+    alert('User not found')
   }
 }

@@ -74,7 +74,7 @@ function lock(): void {
 async function refresh(): Promise<void> {
   loading.value = true
   try {
-    await fetchMessages()
+    await fetchMessages(auth.userId)
     noUserMessage.message = 'No user is found'
   } catch (e) {
     const err = e as Error

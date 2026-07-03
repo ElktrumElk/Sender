@@ -33,7 +33,7 @@ async function submitAuth(): Promise<void> {
     auth.setUserId(result.user.user_id)
     usernameInput.value = ''
     passwordInput.value = ''
-    await fetchMessages()
+    await fetchMessages(auth.userId)
   } catch {
     authError.value = isSignup.value ? 'Signup failed' : 'Invalid credentials'
   }
