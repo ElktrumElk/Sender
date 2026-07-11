@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import { useRoute, useRouter } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
+function goTo(path: string) {
+  router.push(path)
+}
+</script>
 
 <template>
   <div class="side_gutter">
@@ -9,17 +18,35 @@
         class="profile-img"
       />
     </div>
-    <ul class="list-container">
+    <menu class="list-container">
       <li class="list active">
-        <div class="tooltip">Home</div>
-        <img
-          class="home_ic"
-          src="https://img.icons8.com/?size=100&id=73&format=png&color=000000"
-          width="22"
-          height="22"
-        />
+        <button class="btn" :class="{ active: route.path === '/' }" @click="() => goTo('/')">
+          <img
+            class="home_ic"
+            src="https://img.icons8.com/?size=100&id=73&format=png&color=7a7a7a"
+            width="22"
+            height="22"
+          />
+          <span>Invoice</span>
+        </button>
       </li>
-    </ul>
+
+      <li class="list">
+        <button
+          class="btn"
+          :class="{ active: route.path === '/chats' }"
+          @click="() => goTo('/chats')"
+        >
+          <img
+            class="home_ic"
+            src="https://img.icons8.com/?size=100&id=3726&format=png&color=FFFFFF"
+            width="22"
+            height="22"
+          />
+          <span>Chat</span>
+        </button>
+      </li>
+    </menu>
   </div>
 </template>
 
@@ -29,17 +56,12 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 98%;
-  margin-block: 10px;
-  border-radius: 1rem;
+  height: 100%;
   padding: 1.25rem 0.75rem;
   gap: 2.5rem;
-  background: var(--sidebar-bg, linear-gradient(180deg, #ffffff 0%, #f8faff 100%));
-  border: 1px solid var(--sidebar-border, rgba(99, 102, 241, 0.15));
-  box-shadow:
-    0 0 20px rgba(99, 102, 241, 0.06),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  background: var(--color-heading);
   position: relative;
+  border-right: 0.5px solid rgba(128, 128, 128, 0.428);
 }
 
 @media (max-width: 800px) {
@@ -88,6 +110,11 @@
   transition: transform 0.15s ease;
 }
 
+.btn {
+  background: none;
+  border: none;
+  color: var(--color-text);
+}
 .list:hover {
   transform: scale(1.05);
 }
@@ -102,8 +129,8 @@
   left: calc(100% + 10px);
   top: 50%;
   transform: translateY(-50%);
-  background: #1f2937;
-  color: white;
+  background: #3668af;
+
   font-size: 0.7rem;
   padding: 0.3rem 0.6rem;
   border-radius: 0.35rem;
@@ -127,24 +154,19 @@
 }
 
 .home_ic {
-  width: 42px;
-  height: 42px;
+  width: 15px;
+  height: 15px;
   padding: 10px;
+  box-sizing: content-box;
   border-radius: 0.85rem;
-  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
-  box-shadow:
-    0 2px 6px rgba(99, 102, 241, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(99, 102, 241, 0.3);
   transition: all 0.2s ease;
 }
 
 .list.active .home_ic {
-  background: linear-gradient(135deg, #6366f1, #818cf8);
-  border-color: #6366f1;
   box-shadow:
-    0 4px 12px rgba(99, 102, 241, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 2px 6px rgba(99, 102, 241, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.3);
 }
 
 .nav-icon {

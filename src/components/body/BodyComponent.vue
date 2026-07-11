@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute /*useRouter*/ } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import AuthForm from './AuthForm.vue'
 import InvoiceTable from './InvoiceTable.vue'
@@ -8,7 +8,7 @@ import ComposeEmail from './ComposeEmail.vue'
 
 const auth = useAuthStore()
 const route = useRoute()
-const router = useRouter()
+//const router = useRouter()
 
 const showCompose = ref(false)
 const composeRecipient = ref('')
@@ -23,23 +23,23 @@ function closeCompose() {
   composeRecipient.value = ''
 }
 
-function goTo(path: string) {
-  router.push(path)
-}
+// function goTo(path: string) {
+//   router.push(path)
+// }
 </script>
 
 <template>
   <main>
     <AuthForm v-if="!auth.authenticated" />
     <template v-else>
-      <div class="tab-bar">
+      <!-- <div class="tab-bar">
         <button class="tab" :class="{ active: route.path === '/' }" @click="goTo('/')">
           Invoices
         </button>
         <button class="tab" :class="{ active: route.path === '/chats' }" @click="goTo('/chats')">
           Chat
         </button>
-      </div>
+      </div> -->
       <InvoiceTable v-if="route.path === '/'" @compose="openCompose" />
       <ComposeEmail v-if="showCompose" :recipientEmail="composeRecipient" @close="closeCompose" />
     </template>

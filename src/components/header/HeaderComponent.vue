@@ -4,6 +4,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useAppStore } from '@/stores/app'
 import MenuPanel from './MenuPanel.vue'
 import IconPorifile from '../icons/IconPorifile.vue'
+import { isHeader } from '@/global/global.ts'
 
 const auth = useAuthStore()
 const app = useAppStore()
@@ -16,7 +17,7 @@ function toggleSettings() {
 </script>
 
 <template>
-  <header class="header" v-if="auth.authenticated">
+  <header class="header" v-if="auth.authenticated && isHeader">
     <input
       v-model="app.searchQuery"
       type="search"
@@ -72,20 +73,20 @@ function toggleSettings() {
   gap: 1rem;
   width: 100%;
   height: fit-content;
-  margin-top: 10px;
   padding: 0.5rem;
   justify-content: space-between;
-  padding-bottom: 1rem;
+  padding-bottom: 0.1rem;
   border-bottom: 1px solid var(--header-border);
+  background: var(--color-heading);
 }
 .search-input {
   display: flex;
-  height: 40px;
+  height: 20px;
   width: 40%;
   padding: 1rem;
-  border-radius: 1rem;
+  border-radius: 0.8rem;
   border: 1px solid var(--input-border);
-  background: var(--input-bg);
+  background: rgb(0, 28, 41);
   color: var(--text-primary);
   outline: none;
   transition: border-color 0.15s ease;
@@ -148,14 +149,18 @@ function toggleSettings() {
   height: 36px;
   border: 1px solid var(--border);
   border-radius: 0.5rem;
-  background: var(--bg-primary);
+  box-shadow:
+    0 2px 6px rgba(99, 102, 241, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: none;
   color: var(--text-muted);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .settings-btn:hover {
-  background: var(--bg-tertiary);
+  background: rgba(2, 26, 75, 0.05);
   color: var(--text-primary);
 }
 

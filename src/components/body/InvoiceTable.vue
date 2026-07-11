@@ -5,6 +5,7 @@ import { useAppStore } from '@/stores/app'
 import { clearToken } from '@/services/api'
 import { getUsers, removeUser, fetchMessages } from '@/services/messages-store'
 import { wsDisconnect } from '@/services/chat-store'
+import { isHeader } from '@/global/global'
 
 const auth = useAuthStore()
 const app = useAppStore()
@@ -90,13 +91,14 @@ async function refresh(): Promise<void> {
 const emit = defineEmits<{
   (e: 'compose', email?: string): void
 }>()
-
+isHeader.value = true
 </script>
 
 <template>
   <section class="invoices-section">
     <div class="section-header">
       <strong class="page_name">Invoice</strong>
+
       <div class="header-actions">
         <button class="compose-btn" title="Send email" @click="emit('compose')">
           <svg
@@ -129,8 +131,14 @@ const emit = defineEmits<{
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           </svg>
         </button>
+
         <button class="refresh-btn" :disabled="loading" @click="refresh">
-          {{ loading ? 'Loading...' : 'Refresh' }}
+          <img
+            src="https://img.icons8.com/?size=100&id=59872&format=png&color=7a7a7a"
+            width="20"
+            height="20"
+          />
+          <span> {{ loading ? 'Loading...' : '' }}</span>
         </button>
       </div>
     </div>
@@ -236,9 +244,7 @@ const emit = defineEmits<{
   color: white;
 }
 .invoices-section {
-  background: var(--bg-secondary);
-  border-radius: 1rem;
-  margin: 1rem;
+  background: var(--color-heading);
   box-shadow: var(--card-shadow);
   width: 100%;
   display: flex;
@@ -249,7 +255,7 @@ const emit = defineEmits<{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0 0.5rem;
+  padding: 1rem 0 0.5rem 1rem;
 }
 .page_name {
   display: none;
@@ -259,14 +265,17 @@ const emit = defineEmits<{
   align-items: center;
   gap: 0.5rem;
 }
+
 .compose-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+
   padding: 0.5rem 1rem;
-  border: 1px solid var(--accent);
+  border: none;
+
   border-radius: 0.5rem;
-  background: var(--accent);
+  background: none;
   color: white;
   font-size: 0.8rem;
   font-weight: 500;
@@ -285,30 +294,40 @@ const emit = defineEmits<{
   height: 36px;
   border: 1px solid var(--input-border);
   border-radius: 0.5rem;
-  background: var(--bg-primary);
   color: var(--text-muted);
   cursor: pointer;
   transition: all 0.15s ease;
+
+  border: none;
+  background: none;
 }
 .lock-btn:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
+  box-shadow:
+    0 2px 6px rgba(99, 102, 241, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.3);
 }
 .refresh-btn {
-  padding: 0.5rem 1.25rem;
-  border: 1px solid var(--input-border);
-  border-radius: 0.5rem;
-  background: var(--bg-primary);
+  padding: 0.5rem;
+  background: none;
+  border: none;
   color: var(--text-secondary);
   font-size: 0.8rem;
   font-weight: 500;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   transition: all 0.15s ease;
+  cursor: pointer;
+  border-radius: 0.5rem;
 }
-.refresh-btn:hover:not(:disabled) {
-  background: var(--bg-tertiary);
-  border-color: var(--text-light);
+.refresh-btn:hover {
+  box-shadow:
+    0 2px 6px rgba(99, 102, 241, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.3);
 }
+
 .refresh-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -316,17 +335,19 @@ const emit = defineEmits<{
 .table-wrapper {
   overflow-x: auto;
   border-radius: 0.75rem;
-  border: 1px solid var(--table-border);
-  background: var(--bg-primary);
+
+  background: var(--color-heading);
+
   width: 100%;
 }
 .user-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: none;
   font-size: 0.875rem;
 }
 thead {
-  background: var(--table-header-bg);
+  background: var(--color-heading);
+  border: none;
 }
 th {
   text-align: left;
@@ -336,7 +357,7 @@ th {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 2px solid var(--table-border);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.607);
 }
 td {
   padding: 0.85rem 1rem;
@@ -478,7 +499,6 @@ td {
     margin-left: auto;
   }
   .refresh-btn {
-    padding: 0.4rem 0.8rem;
     font-size: 0.75rem;
   }
   .compose-btn {

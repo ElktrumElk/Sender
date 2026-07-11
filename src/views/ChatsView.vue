@@ -1,25 +1,9 @@
 <script setup lang="ts">
-import { useRouter, useRoute } from 'vue-router'
 import ChatPanel from '@/components/body/ChatPanel.vue'
-
-const router = useRouter()
-const route = useRoute()
-
-function goTo(path: string) {
-  router.push(path)
-}
 </script>
 
 <template>
   <div class="page-view">
-    <div class="tab-bar">
-      <button class="tab" :class="{ active: route.path === '/' }" @click="goTo('/')">
-        Invoices
-      </button>
-      <button class="tab" :class="{ active: route.path === '/chats' }" @click="goTo('/chats')">
-        Chat
-      </button>
-    </div>
     <ChatPanel />
   </div>
 </template>

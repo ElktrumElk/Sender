@@ -25,7 +25,7 @@
   --input-bg: #ffffff;
   --input-border: #d1d5db;
   --toolbar-bg: #f9fafb;
-  --header-border: rgba(128, 128, 128, 0.663);
+  --header-border: rgba(128, 128, 128, 0.45);
   --table-header-bg: #f3f4f6;
   --table-border: #e5e7eb;
   --expand-bg: #fafbff;
@@ -101,7 +101,6 @@
   #app {
     display: flex;
     flex-direction: column;
-    border: 1px solid green;
   }
   .app {
     display: grid;
@@ -110,6 +109,5 @@
     height: 100%;
     width: 100%;
     flex: 0 2 auto;
-    gap: 0.3rem;
   }
 }

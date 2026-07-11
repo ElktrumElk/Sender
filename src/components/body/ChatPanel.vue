@@ -1,21 +1,17 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import {  ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { clearToken } from '@/services/api'
 import { wsDisconnect } from '@/services/chat-store'
-import {
-  chatStore,
-  wsConnectWithToken,
-  loadConversations,
-} from '@/services/chat-store'
+import { chatStore, wsConnectWithToken, loadConversations } from '@/services/chat-store'
 import { api } from '@/services/api'
 import { searchUser } from '@/services/messages-store'
+import { isHeader, showNewChat } from '@/global/global'
 
 const router = useRouter()
 const auth = useAuthStore()
 
-const showNewChat = ref(false)
 const newChatPeer = ref('')
 
 function connectChat(): void {
@@ -31,6 +27,7 @@ function doDisconnectChat(): void {
 function openChat(peer: string): void {
   router.push(`/chat/${encodeURIComponent(peer)}`)
 }
+isHeader.value = false
 
 async function startNewConversation() {
   const data = await searchUser(newChatPeer.value)
@@ -66,7 +63,6 @@ watch(
 
 <template>
   <section class="chat-section">
-
     <div class="section-header">
       <strong class="page_name">Chats</strong>
       <div class="header-actions">
@@ -202,12 +198,7 @@ watch(
       </div>
 
       <div class="peer-list-scroll">
-        <div
-          v-for="peer in chatStore.peers"
-          :key="peer"
-          class="peer-card"
-          @click="openChat(peer)"
-        >
+        <div v-for="peer in chatStore.peers" :key="peer" class="peer-card" @click="openChat(peer)">
           <span class="peer-avatar">{{ peer.charAt(0).toUpperCase() }}</span>
           <div class="peer-info">
             <strong class="peer-name">{{ peer }}</strong>
@@ -252,20 +243,19 @@ watch(
     </div>
 
     <!-- Mobile: chat messages view -->
-
   </section>
 </template>
 
 <style lang="css" scoped>
 .chat-section {
-  background: var(--bg-secondary);
+  background: var(--color-heading);
   border-radius: 1rem;
-  margin: 1rem;
   box-shadow: var(--card-shadow);
   width: 100%;
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 1rem;
 }
 .section-header {
   display: flex;
@@ -313,16 +303,16 @@ watch(
   justify-content: center;
   width: 36px;
   height: 36px;
-  border: 1px solid var(--input-border);
   border-radius: 0.5rem;
-  background: var(--bg-primary);
+  background: none;
+  border: none;
   color: var(--text-muted);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 .lock-btn:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
+  background: rgba(109, 109, 109, 0.044);
+  color: white;
 }
 .chat-join {
   flex: 1;
@@ -391,7 +381,7 @@ watch(
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.292);
 }
 .peer-list-user {
   display: flex;
@@ -437,15 +427,15 @@ watch(
   align-items: center;
   gap: 0.3rem;
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(117, 117, 117, 0.289);
 }
 .new-chat-input {
   flex: 1;
   padding: 0.5rem 0.75rem;
-  border: 1px solid var(--input-border);
+  border: none;
   border-radius: 0.5rem;
-  background: var(--input-bg);
-  color: var(--text-primary);
+  background: rgba(53, 53, 99, 0.39);
+  color: white;
   font-size: 0.85rem;
   outline: none;
 }
@@ -483,7 +473,7 @@ watch(
   border-radius: 0.75rem;
   cursor: pointer;
   transition: background 0.1s ease;
-  border: 1px solid var(--border-light);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.396);
 }
 .peer-card:hover {
   background: var(--hover);
@@ -541,7 +531,6 @@ watch(
   font-size: 0.8rem;
   color: var(--text-light);
 }
-
 
 .peer-avatar.sm {
   width: 32px;

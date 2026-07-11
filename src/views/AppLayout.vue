@@ -23,6 +23,7 @@ function showFooter(): boolean {
     <div class="home-wrapper" :style="{ gridColumn: auth.authenticated ? 'span 1' : 'span 2' }">
       <HeaderComponent />
       <RouterView />
+
       <MobileFooter v-if="showFooter()" />
     </div>
   </div>
@@ -36,7 +37,6 @@ function showFooter(): boolean {
   height: 100%;
   width: 100%;
   flex: 0 2 auto;
-  gap: 0.3rem;
 }
 
 .home-wrapper {
@@ -44,7 +44,6 @@ function showFooter(): boolean {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 0rem;
 }
 
 @media (max-width: 800px) {

@@ -104,17 +104,15 @@ function formatChatTime(date: Date): string {
   flex-direction: column;
   min-height: 400px;
   border-radius: 0.75rem;
-  border: 1px solid var(--table-border);
-  background: var(--bg-primary);
+  background: var(--color-heading);
   overflow: hidden;
-  margin: 1rem;
 }
 .chat-head {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.632);
   font-size: 0.9rem;
   color: var(--text-primary);
 }
@@ -154,6 +152,10 @@ function formatChatTime(date: Date): string {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
+  max-width: 800px;
+
+  align-self: center;
 }
 .chat-bubble {
   max-width: 80%;
@@ -192,17 +194,22 @@ function formatChatTime(date: Date): string {
   align-items: center;
   gap: 0.5rem;
   padding: 0.65rem 0.75rem;
-  border-top: 1px solid var(--border);
+  width: 100%;
+  max-width: 800px;
+  align-self: center;
+  position: fixed;
+  bottom: 0;
 }
 .chat-field {
   flex: 1;
   padding: 0.6rem 0.85rem;
-  border: 1px solid var(--input-border);
+  border: none;
   border-radius: 1.5rem;
   font-size: 0.85rem;
   outline: none;
-  background: var(--input-bg);
-  color: var(--text-primary);
+  background: rgb(45, 45, 45);
+  border: 0.4px solid rgba(2, 38, 44, 0.351);
+  color: white;
 }
 .chat-field:focus {
   border-color: var(--accent);
@@ -216,6 +223,7 @@ function formatChatTime(date: Date): string {
   border: none;
   border-radius: 50%;
   background: var(--accent);
+  
   color: white;
   cursor: pointer;
   flex-shrink: 0;

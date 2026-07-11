@@ -30,5 +30,6 @@ function closeCompose() {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background: var(--color-heading);
 }
 </style>
